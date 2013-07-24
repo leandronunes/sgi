@@ -1,0 +1,3 @@
+[submodule "public/openedeyes_free"]
+	path = public/openedeyes_free
+	url = git@github.com:leandronunes/openedeyes.git
