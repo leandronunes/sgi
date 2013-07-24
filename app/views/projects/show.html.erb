@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Fp predicted:</b>
+  <%= @project.fp_predicted %>
+</p>
+
+<p>
+  <b>Fp realized:</b>
+  <%= @project.fp_realized %>
+</p>
+
+<p>
+  <b>Begin date predicted:</b>
+  <%= @project.begin_date_predicted %>
+</p>
+
+<p>
+  <b>End date predicted:</b>
+  <%= @project.end_date_predicted %>
+</p>
+
+<p>
+  <b>Begin date realized:</b>
+  <%= @project.begin_date_realized %>
+</p>
+
+<p>
+  <b>End date realized:</b>
+  <%= @project.end_date_realized %>
+</p>
+
+<p>
+  <b>Code:</b>
+  <%= @project.code %>
+</p>
+
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>

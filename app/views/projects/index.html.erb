@@ -1,0 +1,35 @@
+<h1>Listing projects</h1>
+
+<table>
+  <tr>
+    <th>Fp predicted</th>
+    <th>Fp realized</th>
+    <th>Begin date predicted</th>
+    <th>End date predicted</th>
+    <th>Begin date realized</th>
+    <th>End date realized</th>
+    <th>Code</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @projects.each do |project| %>
+  <tr>
+    <td><%= project.fp_predicted %></td>
+    <td><%= project.fp_realized %></td>
+    <td><%= project.begin_date_predicted %></td>
+    <td><%= project.end_date_predicted %></td>
+    <td><%= project.begin_date_realized %></td>
+    <td><%= project.end_date_realized %></td>
+    <td><%= project.code %></td>
+    <td><%= link_to 'Show', project %></td>
+    <td><%= link_to 'Edit', edit_project_path(project) %></td>
+    <td><%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Project', new_project_path %>

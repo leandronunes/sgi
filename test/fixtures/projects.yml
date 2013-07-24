@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  fp_predicted: 1.5
+  fp_realized: 1.5
+  begin_date_predicted: 2013-07-24 13:41:01
+  end_date_predicted: 2013-07-24 13:41:01
+  begin_date_realized: 2013-07-24 13:41:01
+  end_date_realized: 2013-07-24 13:41:01
+  code: MyString
+
+two:
+  fp_predicted: 1.5
+  fp_realized: 1.5
+  begin_date_predicted: 2013-07-24 13:41:01
+  end_date_predicted: 2013-07-24 13:41:01
+  begin_date_realized: 2013-07-24 13:41:01
+  end_date_realized: 2013-07-24 13:41:01
+  code: MyString
