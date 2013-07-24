@@ -1,4 +1,6 @@
 Sgi::Application.routes.draw do
+  resources :states
+
   resources :projects
 
   # The priority is based upon order of creation:
