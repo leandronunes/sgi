@@ -4,6 +4,7 @@ class CreateProjects < ActiveRecord::Migration
       t.float :fp_predicted, :fp_realized
       t.datetime :begin_date_predicted, :end_date_predicted, :begin_date_realized, :end_date_realized
       t.string :code
+      t.belongs_to :priority, :state, :situation, :process_type, :ss_type
 
       t.timestamps
     end

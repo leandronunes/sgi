@@ -32,6 +32,11 @@ ActiveRecord::Schema.define(:version => 20130724165335) do
     t.datetime "begin_date_realized"
     t.datetime "end_date_realized"
     t.string   "code"
+    t.integer  "priority_id"
+    t.integer  "state_id"
+    t.integer  "situation_id"
+    t.integer  "process_type_id"
+    t.integer  "ss_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
