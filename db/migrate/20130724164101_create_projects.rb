@@ -3,8 +3,8 @@ class CreateProjects < ActiveRecord::Migration
     create_table :projects do |t|
       t.float :fp_predicted, :fp_realized
       t.datetime :begin_date_predicted, :end_date_predicted, :begin_date_realized, :end_date_realized
-      t.string :service_code, :project_code
-      t.belongs_to :priority, :state, :situation, :process_type, :ss_type
+      t.string :code
+      t.belongs_to :priority, :state, :situation, :process_type, :ss_type, :service
 
       t.timestamps
     end

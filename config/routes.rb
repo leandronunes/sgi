@@ -1,4 +1,18 @@
 Sgi::Application.routes.draw do
+  resources :inputs
+
+  resources :time_types
+
+  resources :activities
+
+  resources :task_types
+
+  resources :workers
+
+  resources :appropriations
+
+  resources :services
+
   resources :ss_types
 
   resources :process_types

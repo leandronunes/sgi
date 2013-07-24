@@ -10,7 +10,32 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130724165335) do
+ActiveRecord::Schema.define(:version => 20130724215200) do
+
+  create_table "activities", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "appropriations", :force => true do |t|
+    t.datetime "date"
+    t.float    "time"
+    t.integer  "service_id"
+    t.integer  "worker_id"
+    t.integer  "task_type_id"
+    t.integer  "activity_id"
+    t.integer  "time_type_id"
+    t.integer  "input_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "inputs", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "priorities", :force => true do |t|
     t.string   "name"
@@ -31,13 +56,19 @@ ActiveRecord::Schema.define(:version => 20130724165335) do
     t.datetime "end_date_predicted"
     t.datetime "begin_date_realized"
     t.datetime "end_date_realized"
-    t.string   "service_code"
-    t.string   "project_code"
+    t.string   "code"
     t.integer  "priority_id"
     t.integer  "state_id"
     t.integer  "situation_id"
     t.integer  "process_type_id"
     t.integer  "ss_type_id"
+    t.integer  "service_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "services", :force => true do |t|
+    t.string   "code"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -55,6 +86,25 @@ ActiveRecord::Schema.define(:version => 20130724165335) do
   end
 
   create_table "states", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "task_types", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "time_types", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "workers", :force => true do |t|
+    t.string   "registration"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"

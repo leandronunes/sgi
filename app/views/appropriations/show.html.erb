@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Date:</b>
+  <%= @appropriation.date %>
+</p>
+
+<p>
+  <b>Time:</b>
+  <%= @appropriation.time %>
+</p>
+
+
+<%= link_to 'Edit', edit_appropriation_path(@appropriation) %> |
+<%= link_to 'Back', appropriations_path %>

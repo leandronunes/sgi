@@ -1,0 +1,2 @@
+module AppropriationsHelper
+end
