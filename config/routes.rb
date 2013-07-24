@@ -1,4 +1,6 @@
 Sgi::Application.routes.draw do
+  resources :process_types
+
   resources :priorities
 
   resources :situations
