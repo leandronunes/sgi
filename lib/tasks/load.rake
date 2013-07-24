@@ -48,18 +48,20 @@ namespace :load do
   desc "Load appropriation information"
   task :appropriation => :environment do
     puts "Loadding appropriation..."
-    count = 0 
+    count = 0
+puts Dir.glob("#{Rails.root}/db/data/exportacao_apropriacao*").inspect
     Dir.glob("#{Rails.root}/db/data/exportacao_apropriacao*").map do |path|
       file = File.open(path)
       file.readline
       file.readlines.map do |line|
+        next if line.strip.blank?
         data = line.split('|')
         a = Appropriation.new 
         a.service = select_object(Service, data[0])
 #data[1Código do Insumo]
         a.date= data[2]
         time_str = data[3].split(':')
-        a.time = time_str[0].to_i + time_str[1].to_i/60
+        a.time = time_str[0].to_i + time_str[1].to_f/60
         a.input = select_object(Input, data[4])
         a.activity = select_object(Activity, data[5])
         a.worker = select_object(Worker, data[7])
