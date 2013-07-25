@@ -76,6 +76,9 @@ Sgi::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => "projects#index"
 
+  get 'bubble', :to => 'visualization#bubble'
+  get 'bubble_data', :to => 'visualization#bubble_data'
+
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.

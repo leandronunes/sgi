@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(:version => 20130724215200) do
   create_table "appropriations", :force => true do |t|
     t.datetime "date"
     t.float    "time"
-    t.integer  "service_id"
+    t.integer  "project_id"
     t.integer  "worker_id"
     t.integer  "task_type_id"
     t.integer  "activity_id"
@@ -52,11 +52,14 @@ ActiveRecord::Schema.define(:version => 20130724215200) do
   create_table "projects", :force => true do |t|
     t.float    "fp_predicted"
     t.float    "fp_realized"
+    t.float    "predicted_effort"
+    t.float    "percent_complete"
     t.datetime "begin_date_predicted"
     t.datetime "end_date_predicted"
     t.datetime "begin_date_realized"
     t.datetime "end_date_realized"
     t.string   "code"
+    t.string   "name"
     t.integer  "priority_id"
     t.integer  "state_id"
     t.integer  "situation_id"

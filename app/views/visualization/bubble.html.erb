@@ -1,0 +1,33 @@
+<h1> Gráfico de Bolha </h1>
+
+<p>Defina o tamanho padrão das bolhas: <input type="text" value="5" id="custom-bubble-size" /><a href="#" onclick="var v = $('custom-bubble-size').value; chart.updateConfig({ defaultBubbleSize : v }); chart.updateVis(); return false">Update</a></p>
+
+<div id="content">
+</div>
+
+<script type="text/javascript">
+  var chart;
+  var queryString = window.location.search.replace(/^\?/,'').split('&');
+  var queryParams = {};
+  for (var i=0; i < queryString.length; i++) {
+    var pair = queryString[i].split('=');
+    queryParams[pair[0]] = pair[1];
+  }
+
+  window.onload = function() {
+    chart = new bubbleSVGChart({
+      'container' : 'content',
+      'size' : [400,400],
+      'position' : [120,20],
+      'strokeWidth' : 0,
+      'lang' : queryParams.lang || 'en',
+      'requestPath' : 'bubble_data',
+      'requestMethod' : 'get',
+      'useDefaultInterface' : true,
+      'defaultBubbleSize' : 20,
+      'initialState' : { 'x' : 'fp_predicted', 'y': 'fp_realized', 'size' : 'predicted_effort', 'color' : 'priority' },
+      'background' : ['#b9a680','#f0e4ca']
+    });
+  }
+</script>
+

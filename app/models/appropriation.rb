@@ -1,7 +1,7 @@
 class Appropriation < ActiveRecord::Base
-  validates_presence_of :service_id
+  validates_presence_of :project_id
 
-  belongs_to :service
+  belongs_to :project
   belongs_to :worker
   belongs_to :task_type
   belongs_to :activity
