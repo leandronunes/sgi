@@ -1,5 +1,35 @@
 require 'iconv'
+
+REGIONS = {
+  'DEBSA' => ['Brasilia', 'df'],
+  'DEBLM' => ['Belem', 'pa'],
+  'DEFLA' => ['Fortaleza', 'ce'],
+  'DERCE' => ['Recife', 'pe'],
+  'DESDR' => ['Salvador', 'ba'],
+  'DEBHE' => ['Belo Horizonte', 'mg'],
+  'DERJO' => ['Rio de Janeiro', 'rj'],
+  'DESPO' => ['Sao Paulo', 'sp'],
+  'DECTA' => ['Curitiba', 'pr'],
+  'DEPAE' => ['Porto Alegre', 'rs'],
+}
+
 namespace :load do
+
+  def get_localization(place)
+    return nil if place.blank?
+    codename =  nil
+    REGIONS.keys.map do |key|
+      if place.match("/#{key}/")
+        codename = key
+        break
+      end
+    end
+    localization_info = REGIONS[codename] || []
+    localization = Localization.find_by_name(localization_info.first)
+    localization ||= Localization.create(:name => localization_info.first, :abbreviation => localization_info.second)
+    localization
+  end
+
   def select_object(model, name)
     return nil if name.blank?
     begin
@@ -23,7 +53,8 @@ namespace :load do
       file.readline
       file.readlines.map do |line|
         data = line.split('|')
-        p = Project.new 
+        p = Project.find_by_code(data[7])
+        p ||= Project.new 
         p.service =  select_object(Service, data[0])
         p.begin_date_predicted = data[1]
         p.begin_date_realized = data[2]
@@ -32,17 +63,19 @@ namespace :load do
         p.predicted_effort = data[5]
         p.state = select_object(State, data[6])
         p.code =  data[7]
-        p.name =  data[8]
-        p.percent_complete =  data[9]
-        p.fp_predicted = data[10]
-        p.fp_realized = data[11]
-        p.priority = select_object(Priority, data[12])
-        p.situation = select_object(Situation, data[13])
-        p.process_type = select_object(ProcessType, data[14])
-        p.ss_type = select_object(SsType, data[15])
+        p.localization = get_localization(data[8])
+        p.name =  data[9]
+        p.percent_complete =  data[10]
+        p.fp_predicted = data[11]
+        p.fp_realized = data[12]
+        p.priority = select_object(Priority, data[13])
+        p.situation = select_object(Situation, data[14])
+        p.process_type = select_object(ProcessType, data[15])
+        p.ss_type = select_object(SsType, data[16])
+        p.save
         count += 1
-        puts "Line #{count} Project not saved" unless p.save
-        puts line
+        puts "Line #{count}" 
+#        puts line
       end
     end
   end

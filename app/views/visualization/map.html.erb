@@ -1,0 +1,38 @@
+<h1> Choropleth Map </h1>
+
+<div id="content">
+</div>
+
+
+<script type="text/javascript">
+  var chart;
+  var queryString = window.location.search.replace(/^\?/,'').split('&');
+  var queryParams = {};
+  for (var i=0; i < queryString.length; i++) {
+    var pair = queryString[i].split('=');
+    queryParams[pair[0]] = pair[1];
+  }
+
+  window.onload = function() {
+    chart = new choroplethMap({
+      'container' : 'content',
+      'size' : [400,400],
+      'position' : [130,50],
+      'background' : ['#b9a680','#f0e4ca'],
+      'colors' : ['#FFEFD7','#FFE2B6','#FFC56E','#FFAA29','#C17500','#995D00'],
+      'strokeWidth' : 2,
+      'strokeColor' : '#666',
+      'defaultRegionColor' : '#eeeeee',
+      'strokeHoverColor' : '#000',
+      'lang' : queryParams.lang || 'en',
+      'map' : 'brazil',
+      'requestPath' : 'map_data',
+      'requestMethod' : 'get',
+      'initialState' : { 'regions' : 'fp_predicted', 'bubbles' : 'fp_predicted' },
+      'range' : 'linear',
+      'showLegend' : true,
+      'useDefaultInterface' : true,
+      'showLabels' : true
+    });
+  }
+</script>

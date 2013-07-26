@@ -11,5 +11,8 @@ class Project < ActiveRecord::Base
   belongs_to :process_type
   belongs_to :ss_type
   belongs_to :service
+  belongs_to :localization
+
+  has_many :appropriations, :dependent => :destroy
 
 end
