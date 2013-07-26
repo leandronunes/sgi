@@ -34,7 +34,7 @@ class VisualizationController < ApplicationController
   end
 
   def map_data
-    years = (Project.first.begin_date_realized.year..Project.last.begin_date_realized.year).to_a
+    years = (Project.order(:begin_date_realized).first.begin_date_realized.year.. Project.order("begin_date_realized desc").first.begin_date_realized.year).to_a
     h = {}
     numeric_variables = ['fp_predicted', 'fp_realized', 'predicted_effort', 'percent_complete'] 
     h[:header] = []
