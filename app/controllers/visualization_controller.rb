@@ -68,11 +68,11 @@ class VisualizationController < ApplicationController
     categoric_variables = ['priority', 'state', 'situation','ss_type', 'localization']
 
     JSON.parse(params[:state]).map do |key, value|
-      h[:values][key] = {}
+      h[:values][key] = {:total => Project.count}
       
       value.map do |k,v|
         categoric_variable = k.constantize.find_by_name(v)
-        h[:values][key].merge!({categoric_variable.name => categoric_variable.projects.count})
+        h[:values][key].merge!({k => categoric_variable.projects.count})
       end
 #      Project.group(['localization_id']).sum(var)
       
