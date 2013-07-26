@@ -66,13 +66,16 @@ class VisualizationController < ApplicationController
     h[:values] = {}
 
     categoric_variables = ['priority', 'state', 'situation','ss_type', 'localization']
-
+    fields = params[:fields].split(',') 
     JSON.parse(params[:state]).map do |key, value|
       h[:values][key] = {:total => Project.count}
       
-      value.map do |k,v|
+      conditions = {}
+      fields.each do |k|
+        v = value[k]
         categoric_variable = k.constantize.find_by_name(v)
-        h[:values][key].merge!({k => categoric_variable.projects.count})
+        conditions[k.underscore + '_id'] = categoric_variable.id 
+        h[:values][key].merge!({k => Project.count(:conditions => conditions)})
       end
 #      Project.group(['localization_id']).sum(var)
       
