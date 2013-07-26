@@ -89,7 +89,6 @@ class VisualizationController < ApplicationController
         conditions[k.underscore + '_id'] = categoric_variable.id 
         h[:values][key].merge!({k => Project.count(:conditions => conditions)})
       end
-#      Project.group(['localization_id']).sum(var)
       
     end
 
