@@ -6,7 +6,7 @@ class VisualizationController < ApplicationController
 
   def bubble_data
     h = {}
-    projects = Project.includes([:priority, :state, :situation, :process_type, :ss_type, :localization]).select(['name', 'fp_predicted', 'fp_realized', 'predicted_effort', 'percent_complete', 'priority_id', 'state_id', 'situation_id', 'process_type_id', 'ss_type_id', 'service_id', 'localization_id']).limit(200)
+    projects = Project.includes([:priority, :state, :situation, :process_type, :ss_type, :localization]).select(['name', 'fp_predicted', 'fp_realized', 'predicted_effort', 'percent_complete', 'priority_id', 'state_id', 'situation_id', 'process_type_id', 'ss_type_id', 'service_id', 'localization_id']).offset(10000).limit(1000)
     numeric_variables = ['fp_predicted', 'fp_realized', 'predicted_effort', 'percent_complete'] 
     categoric_variables = ['priority', 'state', 'situation','ss_type', 'localization']
     h[:header] = numeric_variables + categoric_variables
