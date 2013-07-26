@@ -72,10 +72,10 @@ namespace :load do
         a.worker.registration = data[6]
         a.worker.save
 #puts data[7].inspect
-begin
-        a.project = select_object(Project, data[7])
-rescue
-end
+        begin
+          a.project = select_object(Project, data[7])
+        rescue
+        end
         a.time_type = select_object(TimeType, data[9])
         a.task_type = select_object(TaskType, data[10])
 

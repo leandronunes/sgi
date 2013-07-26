@@ -38,4 +38,13 @@ class VisualizationController < ApplicationController
     render :json => h
   end
 
+  def map
+  
+  end
+
+  def map_data
+    h = {}
+    render :json => h
+  end
+
 end
