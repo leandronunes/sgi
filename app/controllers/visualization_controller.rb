@@ -6,8 +6,7 @@ class VisualizationController < ApplicationController
 
   def bubble_data
     h = {}
-    year = Time.parse("#{params[:year]}-01-01")
-    projects = Project.includes([:priority, :state, :situation, :process_type, :ss_type, :localization]).select(['name', 'fp_predicted', 'fp_realized', 'predicted_effort', 'percent_complete', 'priority_id', 'state_id', 'situation_id', 'process_type_id', 'ss_type_id', 'service_id', 'localization_id']).limit(200).where(:begin_date_realized => year.beginning_of_year..year.end_of_year)
+    projects = Project.includes([:priority, :state, :situation, :process_type, :ss_type, :localization]).select(['name', 'fp_predicted', 'fp_realized', 'predicted_effort', 'percent_complete', 'priority_id', 'state_id', 'situation_id', 'process_type_id', 'ss_type_id', 'service_id', 'localization_id']).limit(200)
     numeric_variables = ['fp_predicted', 'fp_realized', 'predicted_effort', 'percent_complete'] 
     categoric_variables = ['priority', 'state', 'situation','ss_type', 'localization']
     h[:header] = numeric_variables + categoric_variables

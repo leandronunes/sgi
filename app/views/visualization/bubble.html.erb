@@ -1,14 +1,3 @@
-<style type="text/css">
-#slider {
-  top: 780px;
-  left: 160px;
-}
-#play {
-  top: 780px;
-  left: 120px;
-}
-</style>
-
 <h1> Gráfico de Bolha </h1>
 
 <p>Defina o tamanho padrão das bolhas: <input type="text" value="5" id="custom-bubble-size" /><a href="#" onclick="var v = $('custom-bubble-size').value; chart.updateConfig({ defaultBubbleSize : v }); chart.updateVis(); return false">Update</a></p>
@@ -16,40 +5,13 @@
 <div id="content">
 </div>
 
-<a href="#" onclick="playSlider(1); return false" id="play">Play</a>
-<div id="slider" class="dragdealer">
-  <div class="handle" id="handle">2010</div>
-</div>
-
 <script type="text/javascript">
   var chart;
-  var slider;
-  var year = 2010;
-
   var queryString = window.location.search.replace(/^\?/,'').split('&');
   var queryParams = {};
   for (var i=0; i < queryString.length; i++) {
     var pair = queryString[i].split('=');
     queryParams[pair[0]] = pair[1];
-  }
-
-  function playSlider(i) {
-    slider.setStep(i);
-    window.setTimeout(function() {
-      if (i <= 4) playSlider(i+1);
-    }, 1500);
-  }
-
-  function createSlider(vis) {
-    slider = new Dragdealer('slider', {
-      steps: 4,
-      snap: true,
-      animationCallback: function(x, y) {
-        year = 2010 + parseInt(x * 3);
-        vis.updateVis();
-        $('handle').update(year);
-      }
-    });
   }
 
   window.onload = function() {
@@ -64,11 +26,7 @@
       'useDefaultInterface' : true,
       'defaultBubbleSize' : 20,
       'initialState' : { 'x' : 'fp_predicted', 'y': 'fp_realized', 'size' : 'predicted_effort', 'color' : 'priority' },
-      'background' : ['#b9a680','#f0e4ca'],
-      'addParams' : function() {
-                      return { 'year' : year }
-                    },
-      'callback' : function(vis) { createSlider(vis); }
+      'background' : ['#b9a680','#f0e4ca']
     });
   }
 </script>
