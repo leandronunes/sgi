@@ -35,9 +35,15 @@ class VisualizationController < ApplicationController
   end
 
   def map_data
+    years = (Project.first.begin_date_realized.year..Project.last.begin_date_realized.year).to_a
     h = {}
     numeric_variables = ['fp_predicted', 'fp_realized', 'predicted_effort', 'percent_complete'] 
-    h[:header] = numeric_variables
+    h[:header] = []
+    numeric_variables.each do |v|
+      years.each do |y|
+        h[:header] << v + '_' + y.to_s
+      end
+    end
     h[:values] = {}
    
     localizations = {}
@@ -47,10 +53,16 @@ class VisualizationController < ApplicationController
     end
     
     numeric_variables.map do |var|
-      operation = var == 'percent_complete' ? Project.group(['localization_id']).average(var) : Project.group(['localization_id']).sum(var)
-      operation.map do |k,v|
-        next if k.nil?
-        h[:values][localizations[k]].merge!({var => v})
+      years.each do |y|
+        year = Time.parse("#{y}-01-01")
+        operation = var == 'percent_complete' ? Project.where(:begin_date_realized => year.beginning_of_year..year.end_of_year).group(['localization_id']).average(var) : Project.where(:begin_date_realized => year.beginning_of_year..year.end_of_year).group(['localization_id']).sum(var)
+        localizations.each do |id, abbr|
+          h[:values][abbr].merge!({"#{var}_#{y}" => 0})
+        end
+        operation.map do |k,v|
+          next if k.nil?
+          h[:values][localizations[k]].merge!({"#{var}_#{y}" => v})
+        end
       end
     end
 
