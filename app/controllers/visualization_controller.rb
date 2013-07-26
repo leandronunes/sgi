@@ -82,7 +82,7 @@ class VisualizationController < ApplicationController
     JSON.parse(params[:state]).map do |key, value|
       # FIXME: Is :begin_date_realized the best date column to be used here? 
       conditions = { :begin_date_realized => year.beginning_of_year..year.end_of_year }
-      h[:values][key] = {:total => Project.count(conditions)}
+      h[:values][key] = {:total => Project.count(:conditions => conditions)}
       fields.each do |k|
         v = value[k]
         categoric_variable = k.constantize.find_by_name(v)
