@@ -5,4 +5,8 @@ class Localization < ActiveRecord::Base
 
   has_many :projects
 
+  def name
+    self.abbreviation
+  end
+
 end
