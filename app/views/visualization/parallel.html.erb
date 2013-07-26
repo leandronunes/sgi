@@ -23,16 +23,16 @@
   function playSlider(i) {
     slider.setStep(i);
     window.setTimeout(function() {
-      if (i <= 6) playSlider(i+1);
+      if (i <= 4) playSlider(i+1);
     }, 1500);
   }
 
   function createSlider(vis) {
     slider = new Dragdealer('slider', {
-      steps: 6,
+      steps: 4,
       snap: true,
       animationCallback: function(x, y) {
-        year = 2010 + parseInt(x * 5);
+        year = 2010 + parseInt(x * 3);
         vis.updateVis();
         $('handle').update(year);
       }

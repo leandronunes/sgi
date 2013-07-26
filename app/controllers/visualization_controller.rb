@@ -64,13 +64,13 @@ class VisualizationController < ApplicationController
     h = {}
     h[:header] = ['Total']
     h[:values] = {}
-
+    year = Time.parse("#{params[:year]}-01-01")
     categoric_variables = ['priority', 'state', 'situation','ss_type', 'localization']
     fields = params[:fields].split(',') 
     JSON.parse(params[:state]).map do |key, value|
       h[:values][key] = {:total => Project.count}
-      
-      conditions = {}
+      # FIXME: Is :begin_date_realized the best date column to be used here? 
+      conditions = { :begin_date_realized => year.beginning_of_year..year.end_of_year }
       fields.each do |k|
         v = value[k]
         categoric_variable = k.constantize.find_by_name(v)
