@@ -56,4 +56,29 @@ class VisualizationController < ApplicationController
     render :json => h
   end
 
+
+  def parallel
+  end 
+
+  def parallel_data
+    h = {}
+    h[:header] = ['Total']
+    h[:values] = {}
+
+    categoric_variables = ['priority', 'state', 'situation','ss_type', 'localization']
+
+    JSON.parse(params[:state]).map do |key, value|
+      h[:values][key] = {}
+      
+      value.map do |k,v|
+        categoric_variable = k.constantize.find_by_name(v)
+        h[:values][key].merge!({categoric_variable.name => categoric_variable.projects.count})
+      end
+#      Project.group(['localization_id']).sum(var)
+      
+    end
+
+    render :json => h
+  end
+
 end

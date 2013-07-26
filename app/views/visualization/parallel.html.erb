@@ -1,0 +1,70 @@
+<h1>Parallel Coordinates Chart </h1>
+
+<div id="content">
+</div>
+
+<a href="#" onclick="playSlider(1); return false" id="play">Play</a>
+<div id="slider" class="dragdealer">
+  <div class="handle" id="handle">2010</div>
+</div>
+
+<script type="text/javascript">
+  var chart;
+  var slider;
+  var year = 2010;
+
+  var queryString = window.location.search.replace(/^\?/,'').split('&');
+  var queryParams = {};
+  for (var i=0; i < queryString.length; i++) {
+    var pair = queryString[i].split('=');
+    queryParams[pair[0]] = pair[1];
+  }
+
+  function playSlider(i) {
+    slider.setStep(i);
+    window.setTimeout(function() {
+      if (i <= 6) playSlider(i+1);
+    }, 1500);
+  }
+
+  function createSlider(vis) {
+    slider = new Dragdealer('slider', {
+      steps: 6,
+      snap: true,
+      animationCallback: function(x, y) {
+        year = 2010 + parseInt(x * 5);
+        vis.updateVis();
+        $('handle').update(year);
+      }
+    });
+  }
+
+  window.onload = function() {
+    chart = new parallelCoordinatesChart({
+      'container' : 'content',
+      'size' : [1000,300],
+      'position' : [270,50],
+      'background' : ['#b9a680','#f0e4ca'],
+      'strokeWidth' : 3,
+      'lang' : queryParams.lang || 'en',
+      'requestPath' : 'parallel_data',
+      'requestMethod' : 'get',
+      'useDefaultInterface' : true,
+      'initialState' : { 'A' : {'Situation':'Concluído',
+                                'Priority':'Alta'
+                                }
+                       },
+      'bars' : { 'Situation' : ["Concluído", "Em andamento normal", "Em planejamento", "Em atendimento", "Suspenso", "Cancelado", "Em homologação", "Em proposição"],
+                 'Priority' : ["Urgente", "Alta", "Média", "Baixa"],
+                 'SsType' : ["Novo Sistema", "Não Informado", "Apuração Especial", "Manutenção Evolutiva", "Suporte Sistemas Produção", "Apoio", "Projeto de Integração", "Análise de problema", "Execução de APES", "Suporte Arq. Sist. Aplic.", "Manutenção Adaptativa", "Manutenção Corretiva", "Documentação de Script", "Suporte Aplic. Desenvolv", "Suporte a Ferramentas", "Suporte à Tecnologia", "Suporte Segurança Aplic.", "Suporte a Processo", "Suporte a Ambientes", "Consultoria", "Suporte DW", "Manutenção Preventiva", "Análise Riscos Arquit.", "Rotinas Especiais", "Suporte Componentes", "Documentação de sistema", "Suporte a Requisitos", "Suporte a Teste", "Treinamento", "Suporte Banco de Dados", "Suporte Framework", "Arquitetura de Solução", "Análise de Código Fonte", "Análise de Solução", "Ana. Incidente"]
+               },
+      'activeBars' : ['Situation','Priority'],
+      'activeLine' : 'A',
+      'autoUpdate' : true,
+      'addParams' : function() {
+                      return { 'fields' : this.config.activeBars.join(','), 'state' : JSON.stringify(this.currentState), 'year' : year }
+                    },
+      'callback' : function(vis) { createSlider(vis); }
+    });
+  }
+</script>

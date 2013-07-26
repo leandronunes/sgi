@@ -82,6 +82,8 @@ Sgi::Application.routes.draw do
   get 'map', :to => 'visualization#map'
   get 'map_data', :to => 'visualization#map_data'
 
+  get 'parallel', :to => 'visualization#parallel'
+  get 'parallel_data', :to => 'visualization#parallel_data'
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
