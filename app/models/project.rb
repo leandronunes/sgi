@@ -4,6 +4,7 @@ class Project < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
   validates_presence_of :service_id
+#  validates_presence_of :localization_id
 
   belongs_to :priority
   belongs_to :state
@@ -14,5 +15,9 @@ class Project < ActiveRecord::Base
   belongs_to :localization
 
   has_many :appropriations, :dependent => :destroy
+
+  def time
+    self.appropriations.sum('time')
+  end
 
 end

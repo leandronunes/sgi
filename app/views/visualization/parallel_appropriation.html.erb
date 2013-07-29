@@ -1,0 +1,71 @@
+<h1>Parallel Coordinates Chart: Apropriação </h1>
+
+<div id="content">
+</div>
+
+<a href="#" onclick="playSlider(1); return false" id="play">Play</a>
+<div id="slider" class="dragdealer">
+  <div class="handle" id="handle">2010</div>
+</div>
+
+<script type="text/javascript">
+  var chart;
+  var slider;
+  var year = 2010;
+
+  var queryString = window.location.search.replace(/^\?/,'').split('&');
+  var queryParams = {};
+  for (var i=0; i < queryString.length; i++) {
+    var pair = queryString[i].split('=');
+    queryParams[pair[0]] = pair[1];
+  }
+
+  function playSlider(i) {
+    slider.setStep(i);
+    window.setTimeout(function() {
+      if (i <= 4) playSlider(i+1);
+    }, 1500);
+  }
+
+  function createSlider(vis) {
+    slider = new Dragdealer('slider', {
+      steps: 4,
+      snap: true,
+      animationCallback: function(x, y) {
+        year = 2010 + parseInt(x * 3);
+        vis.updateVis();
+        $('handle').update(year);
+      }
+    });
+  }
+
+  window.onload = function() {
+    chart = new parallelCoordinatesChart({
+      'container' : 'content',
+      'size' : [1000,400],
+      'position' : [270,50],
+      'background' : ['#b9a680','#f0e4ca'],
+      'strokeWidth' : 3,
+      'lang' : queryParams.lang || 'en',
+      'requestPath' : 'parallel_appropriation_data',
+      'requestMethod' : 'get',
+      'useDefaultInterface' : true,
+      'initialState' : { 'A' : {'TimeType':'Normal',
+                                'TaskType':'Projeto'
+                                }
+                       },
+      'bars' : { 'TaskType' : ["Projeto", "Servico", "Serviço Especial", "Afastamento"],
+                 'Activity' : ["Garantia da Qualidade de Software", "Gestão de Configuração de Software", "Gestão de Projeto de Software", "Requisitos", "Requisitos – aguardando validação", "Análise e Projeto", "Testes", "Implementação", "Homologação", "Implantação", "Revisão por Pares", "Homologação – aguardando aceite", "Gestão de Projeto de Software - deslocamento", "Gestão do Processo da Organização", "Negócio", "Programa de Treinamento", "Análise", "Análise de Decisão e Resolução", "Medição e Análise", "Gestão de Aquisição com Fornecedor"],
+                 'TimeType' : ["Normal", "Extra", "Afastamento"],
+                 'Input' : ["Suporte a Execução de Serviço", "Desenvolvimento e Manutenção de Software", "Programação", "Análise de Sistemas SP", "Análise de Sistemas", "Consultoria", "Consultoria Técnica", "Apoio Técnico", "Análise de Negócio", "Gestão de Negócio"]
+               },
+      'activeBars' : ['TimeType','TaskType'],
+      'activeLine' : 'A',
+      'autoUpdate' : true,
+      'addParams' : function() {
+                      return { 'fields' : this.config.activeBars.join(','), 'state' : JSON.stringify(this.currentState), 'year' : year }
+                    },
+      'callback' : function(vis) { createSlider(vis); }
+    });
+  }
+</script>

@@ -84,6 +84,10 @@ Sgi::Application.routes.draw do
 
   get 'parallel', :to => 'visualization#parallel'
   get 'parallel_data', :to => 'visualization#parallel_data'
+
+
+  get 'parallel_appropriation', :to => 'visualization#parallel_appropriation'
+  get 'parallel_appropriation_data', :to => 'visualization#parallel_appropriation_data'
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
