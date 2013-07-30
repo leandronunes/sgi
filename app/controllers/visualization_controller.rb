@@ -7,7 +7,17 @@ class VisualizationController < ApplicationController
   def bubble_data
     h = {}
 #    projects = Project.includes([:priority, :state, :situation, :process_type, :ss_type, :localization]).select(['name', 'fp_predicted', 'fp_realized', 'predicted_effort', 'percent_complete', 'priority_id', 'state_id', 'situation_id', 'process_type_id', 'ss_type_id', 'service_id', 'localization_id']).offset(10000).limit(1000)
-    projects = Project.order(:begin_date_realized).includes([:priority, :state, :situation, :process_type, :ss_type, :localization]).select(['name', 'fp_predicted', 'fp_realized', 'predicted_effort', 'percent_complete', 'priority_id', 'state_id', 'situation_id', 'process_type_id', 'ss_type_id', 'service_id', 'localization_id', 'id']).limit(10)
+#    projects = Project.order(:begin_date_realized).includes([:priority, :state, :situation, :process_type, :ss_type, :localization]).select(['name', 'fp_predicted', 'fp_realized', 'predicted_effort', 'percent_complete', 'priority_id', 'state_id', 'situation_id', 'process_type_id', 'ss_type_id', 'service_id', 'localization_id', 'time']).limit(1000)
+#    projects = Project.order(:begin_date_realized).select(['name', 'fp_predicted', 'fp_realized', 'predicted_effort', 'percent_complete', 'priority_id', 'state_id', 'situation_id', 'process_type_id', 'ss_type_id', 'service_id', 'localization_id', 'time']).limit(10000)
+    if File.exists?(Rails.root.to_s + '/tmp/cache/data.json')
+      file = File.open(Rails.root.to_s + '/tmp/cache/data.json')
+      render :json => JSON.parse(file.readline)
+      return
+    end
+    
+
+    year = Time.parse("2013-01-01")
+    projects = Project.where(:begin_date_realized => year.beginning_of_year..year.end_of_year).select(['name', 'fp_predicted', 'fp_realized', 'predicted_effort', 'percent_complete', 'priority_id', 'state_id', 'situation_id', 'process_type_id', 'ss_type_id', 'service_id', 'localization_id', 'time'])
     numeric_variables = ['fp_predicted', 'fp_realized', 'predicted_effort', 'percent_complete', 'time'] 
     categoric_variables = ['priority', 'state', 'situation','ss_type', 'localization']
     h[:header] = numeric_variables + categoric_variables
@@ -26,6 +36,11 @@ class VisualizationController < ApplicationController
       h[:values].merge!(value)
     end
 
+    unless File.exists?(Rails.root.to_s + '/tmp/cache/data.json')
+      file = File.open(Rails.root.to_s + '/tmp/cache/data.json','w+')
+      file.write(h.to_json)
+    end
+    
 
     render :json => h
   end

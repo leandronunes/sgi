@@ -16,8 +16,4 @@ class Project < ActiveRecord::Base
 
   has_many :appropriations, :dependent => :destroy
 
-  def time
-    self.appropriations.sum('time')
-  end
-
 end

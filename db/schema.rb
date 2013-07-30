@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130729150658) do
+ActiveRecord::Schema.define(:version => 20130729195437) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -78,6 +78,14 @@ ActiveRecord::Schema.define(:version => 20130729150658) do
     t.integer  "localization_id"
     t.float    "time"
   end
+
+  add_index "projects", ["localization_id"], :name => "index_projects_on_localization_id"
+  add_index "projects", ["priority_id"], :name => "index_projects_on_priority_id"
+  add_index "projects", ["process_type_id"], :name => "index_projects_on_process_type_id"
+  add_index "projects", ["service_id"], :name => "index_projects_on_service_id"
+  add_index "projects", ["situation_id"], :name => "index_projects_on_situation_id"
+  add_index "projects", ["ss_type_id"], :name => "index_projects_on_ss_type_id"
+  add_index "projects", ["state_id"], :name => "index_projects_on_state_id"
 
   create_table "services", :force => true do |t|
     t.string   "code"
